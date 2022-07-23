@@ -15,6 +15,19 @@ const userData = {
   }
 };
 
+/** ソート処理 */
+export const sort = (data: any[], key: string, isReverse: boolean) => {
+  const sortBy = () => {
+    return (a: any, b: any) => {
+      const orderBy = isReverse ? 1 : -1;
+      if (a[key] < b[key]) return orderBy;
+      if (a[key] > b[key]) return orderBy * -1;
+      return 0;
+    };
+  };
+  return data.sort(sortBy());
+};
+
 /** 組織階層を名称で返却 */
 export const createHierarchy = (hierarchy: any[]): string => {
   if (!hierarchy || !hierarchy.length) return "";
