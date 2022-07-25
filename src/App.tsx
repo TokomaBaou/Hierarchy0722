@@ -40,6 +40,26 @@ export const createHierarchy = (hierarchy: any[]): string => {
     .join(" / ");
 };
 
+//パラメータに型付与、返り値に型付与
+/** 第一階層だけ */
+const setOrganizationList: OrganizationListType[] = resultData.departmentList.map(
+  (dep) => {
+    const belong: BelongType[] = [
+      {
+        belongList: dep.belongList,
+        departmentCd: dep.departmentCd,
+        departmentName: dep.departmentName
+      }
+    ];
+    const topOrganization: OrganizationListType = {
+      departmentCd: dep.departmentCd,
+      departmentName: dep.departmentName,
+      belongList: createBelongList(belong)
+    };
+    return topOrganization;
+  }
+);
+
 export default function App() {
   return (
     <div className="App">
