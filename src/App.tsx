@@ -60,6 +60,25 @@ const setOrganizationList: OrganizationListType[] = resultData.departmentList.ma
   }
 );
 
+/** 組織階層形式で返却(1-5階層全て) */
+const createBelongList = (departmentList: BelongType[]): BelongType[] => {
+  // 返却値
+  const rtnOrgList: BelongType[] = [];
+  departmentList.forEach((dep) => {
+    // プルダウンリストを生成
+    rtnOrgList.push({
+      departmentCd: dep.departmentCd,
+      departmentName: dep.departmentName,
+      belongList: dep.belongList
+    });
+    // 子組織がある場合
+    if (dep.belongList.length !== 0) {
+      belongHierarchy(dep.belongList, [dep.departmentName], rtnOrgList);
+    }
+  });
+  return rtnOrgList;
+};
+
 export default function App() {
   return (
     <div className="App">
