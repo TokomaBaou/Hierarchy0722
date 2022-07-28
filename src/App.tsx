@@ -100,6 +100,8 @@ export const createOrganizationList = (
   return rtnOrgList;
 };
 
+const orgHierarchy = () => {};
+
 export default function App() {
   return (
     <div className="App">
