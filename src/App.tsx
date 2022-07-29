@@ -79,6 +79,31 @@ const createBelongList = (departmentList: BelongType[]): BelongType[] => {
   return rtnOrgList;
 };
 
+/** 子階層のプルダウンリストを生成 */
+export const orgHierarchy = (
+  belongList: Department[],
+  group: string,
+  parent: string[],
+  orgList: Select[]
+) => {
+  const setOrgList: Select[] = orgList;
+  belongList.forEach((dep) => {
+    // 階層名称を生成
+    const setParent = [...parent, dep.name];
+    // プルダウンリストを生成
+    setOrgList.push({
+      value: dep.departmentCd,
+      label: setParent.join(" / "),
+      group: group
+    });
+    // 子組織がある場合
+    if (dep.belongList.length !== 0) {
+      //（階層数だけループ処理）
+      orgHierarchy(dep.belongList, group, setParent, setOrgList);
+    }
+  });
+};
+
 /** 組織プルダウンリスト形式で返却 */
 export const createOrganizationList = (
   departmentList: Department[]
